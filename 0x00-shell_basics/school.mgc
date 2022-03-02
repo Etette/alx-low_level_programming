@@ -1,2 +1,2 @@
 #!/bin/bash
-file -c -m /usr/share/school/SCHOOL
+file -c -m /usr/share/SCHOOL/school
