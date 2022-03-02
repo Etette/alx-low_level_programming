@@ -1,2 +1,2 @@
 #!/bin/bash
-file -c -m /usr/share/school/__SCHOOL__
+file -c -m /user/file/share/school/SCHOOL.mgc
