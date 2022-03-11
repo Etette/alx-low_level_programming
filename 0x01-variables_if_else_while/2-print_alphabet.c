@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-/*
- * main - main block
+
+/**
+ * main - Entry point
  * Description: print a lowercase of alphabets
  * Return: 0
  */
