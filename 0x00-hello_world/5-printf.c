@@ -1,5 +1,6 @@
 #include <stdio.h>
-/*
+/**
+ * main - main block
  * Description: main-prints a string to stdout block
  * Return: 0 if success.
  */
