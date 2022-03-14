@@ -8,29 +8,30 @@
 
 int main(void)
 {
-	int j, i;
+	int x;
+	int y;
 
-	for (j = 0; j <= 99; j++)
+	x = 48;
+
+	while (x < 57)
 	{
-		for (i = j; i <= 99; i++)
+		y = x + 1;
+		
+		while (y < 58)
 		{
-			if (i != j)
+			putchar(x);
+			putchar(y);
+			if (y != 57 || x != 56)
 			{
-				putchar(j / 10 + 48);
-				putchar(j % 10 + 45);
+				putchar('.');
 				putchar(' ');
-				putchar(i / 10 + 48);
-				putchar(i % 10 + 48);
-
-				if (j * 100 + i != 9899)
-				{
-					putchar(',');
-					putchar(' ');
-				}
 			}
+			y++;
 		}
+		x++;
 	}
 	putchar('\n');
 
-	return (0);
+
+return (0);
 }
