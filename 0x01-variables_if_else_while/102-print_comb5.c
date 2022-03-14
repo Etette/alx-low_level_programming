@@ -16,7 +16,6 @@ int main(void)
 	while (x < 57)
 	{
 		y = x + 1;
-		
 		while (y < 58)
 		{
 			putchar(x);
