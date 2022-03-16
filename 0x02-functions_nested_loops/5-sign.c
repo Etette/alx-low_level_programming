@@ -2,7 +2,7 @@
 
 /**
  * print_sign - prints the sign of a number
- * @n : int type
+ * @n : int type character
  * Description: print +,- or 0
  * Return: 1 if n > 0, 0 if n == 0, -1 if n < 0
  */
