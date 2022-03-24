@@ -1,110 +1,49 @@
 #include "main.h"
 
 /**
- * _strlen - returns the length of a string
- * @s: string s
- * Return: length of string
- */
-
-int _strlen(char *s)
-{
-	char *p = s;
-
-	while (*s)
-		s++;
-	return (s - p);
-}
-
-/**
- * rev_string - reverse a string
- * @s: string s
- */
-void rev_string(char *s)
-{
-	int i = 0;
-	int size = _strlen(s);
-	char temp;
-
-	while (i < size)
-	{
-		temp = *(s + i);
-		*(s + i) = *(s + size - 1);
-		*(s + size - 1) = temp;
-		i++;
-		size--;
-	}
-}
-
-/**
- * returnRes - changes ptr to digit
- * @sum: pre-total
- * @plusOne: flag to add one to res
- * Return: digit in array
- */
-
-int returnRes(int sum, int plusOne)
-{
-	int res;
-
-	if (sum == 9 && plusOne)
-	{
-		res = 0;
-	}
-	else if ((sum >= 10 && plusOne) || (sum < 9 && plusOne))
-		res = (sum % 10) + 1;
-	else
-		res = sum % 10;
-	return (res);
-}
-
-/**
- * returnPlusOne - determine bool of plusOne
- * @sum: pre-total
- * @plusOne: flag to add one to res
- * Return: 1
- */
-
-int returnPlusOne(int sum, int plusOne)
-{
-	if (sum > 9)
-		plusOne = 1;
-	else if (sum == 9 && plusOne)
-		plusOne = 1;
-	else
-		plusOne = 0;
-	return (plusOne);
-}
-
-/**
- * infinite_add - add two numbers
- * @n1: first number param
- * @n2: second number param
- * @r: buffer to store result
- * @size_r: buffer size
- * Return: pointer to result
+ * infinite_add - add two integer
+ * @n1: first int
+ * @n2: second int
+ * @r: result
+ * @size_r: result size
+ * Return: n1 + n2
  */
 
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-	int sum, res, first, second, i = 0, plusOne = 0;
-	int len1 = _strlen(n1), len2 = _strlen(n2);
-	char *ptr = r;
+	int add = 0, len1, len2, i, j;
 
-	while (len1 > 0 || len2 > 0)
+
+	for (len1 = 0; n1[len1]; len1++)
+		;
+	for (len2 = 0; n2[len2]; len2++)
+		;
+	if (len1 > size_r || len2 > size_r)
+		return (0);
+	len1--;
+	len2--;
+	size_r--;
+
+	for (i = 0; i < size_r; i++, len1--, len2--)
 	{
-		first = len1 > 0 ? (*(n1 + len1 - 1) - '0') : 0;
-		second = len2 > 0 ? (*(n2 + len2 - 1) - '0') : 0;
-		sum = first + second;
-		res = returnRes(sum, plusOne);
-		plusOne = returnRes(sum, plusOne);
-		*(ptr + i) = res + '0';
-		len1--;
-		len2--;
-		i++;
+		if (len1 >= 0)
+			add += n1[len1] - '0';
+		if (len2 >= 0)
+			add += n2[len2] - '0';
+		if (len1 < 0 && len2 < 0 && add == 0)
+			break;
+		r[i] = add % 10 + '0';
+		add /= 10;
 	}
-	if (plusOne)
-		*(ptr + i) = 1 + '0';
-	ptr[++i] = '\0';
-	rev_string(ptr);
-	return ((size_r > _strlen(ptr)) ? ptr : 0);
+	r[i] = '\0';
+
+	if (len1 >= 0 || len2 >= 0 || add)
+		return (0);
+	for (i--, j = 0; i > j; i--, j++)
+	{
+		add = r[i];
+		r[i] = r[j];
+		r[j] = add;
+	}
+	return (r);
 }
