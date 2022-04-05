@@ -5,40 +5,38 @@
 /**
  * word_count - counts number of words
  * @s: string param
- *
+ *@size: int param
  * Return: int
  */
 
-int word_count(char *s)
+int word_count(char *s, int size)
 {
-	int x, wc;
+	int i, count = 0;
 
-	x = 0, wc = 0;
-	if (*(s + 1) == ' ')
-		x++;
-	while (*(s + 1))
+	for (i = 0; s[i] != '\0'; i++)
 	{
-		if (*(s + 1) == ' ' && *(s + x - 1) != ' ')
-			wc++;
-		if (*(s + 1) != ' ' && *(s + x + 1) == 0)
-			wc++;
-		x++;
+		if (s[i] != ' ')
+		{
+			while (i < size && s[i] != ' ')
+				i++;
+			count++;
+		}
 	}
-	return (wc);
+	return (count);
 }
 
 /**
- * trail_space - movees address to remove trailing whitespaces
- * @s: string
+ * strlen_recur - length of a string
+ * @s: char pointer
  *
- * Return: pointer
+ * Return: int variable
  */
 
-char *trail_space(char *s)
+int strlen_recur(char *s)
 {
-	while (*s == ' ')
-		s++;
-	return (s);
+	if (*s != '\0')
+		return (1 + strlen_recur(++s));
+	return (0);
 }
 
 /**
@@ -49,44 +47,20 @@ char *trail_space(char *s)
 
 char **strtow(char *str)
 {
-	char **s, *ts;
-	int a, b, c, i, j, x, y;
+	char *strcp, **strcon;
+	int len = 0, nw; /*noWords*/
 
-	if (str == NULL || *str == 0)
-		return (0);
-	x = 0;
-	c = word_count(str);
-	if (c == 0)
-		return (0);
+	if (str == NULL || str[0] == 0)
+		return (NULL);
 
-	s = malloc((c + 1) * sizeof(char *));
+	strcp = str;
+	len = strlen_recur(strcp);
+	nw = word_count(str, len);
 
-	if (s == 0)
-		return (0);
+	if (nw < 1)
+		return (NULL);
 
-	ts = trail_space(str);
-	for (i = 0; i < c; i++)
-	{
-		a = 0;
-		while (*(ts + a) != ' ' && *(ts + 1) != 0)
-			a++;
-		s[i] = malloc((a + 1) * sizeof(char));
-		if (s[i] == 0)
-		{
-			x = 1;
-			break;
-		}
-		for (j = 0, b = 0; b < a; b++, j++)
-			s[i][j] = *(ts + b);
-		s[i][j] = '\0';
-		ts = trail_space(ts + a);
-	}
-	s[i] = NULL;
-	if (x == 1)
-	{
-		for (y = 0; y <= i; y++)
-			free(s[y]);
-		free(s);
-	}
-	return (s);
+	strcon = malloc((nw + 1) * sizeof(char *));
+	strcon[0] = malloc(sizeof(char) * 1 + 1);
+	return (strcon);
 }
