@@ -2,41 +2,71 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+int is_space(char c);
+
 /**
  * word_count - counts number of words
  * @s: string param
- *@size: int param
+ *
  * Return: int
  */
 
-int word_count(char *s, int size)
+int count_word(char *s)
 {
-	int i, count = 0;
+	int i = 0;
+	int j = 0;
 
-	for (i = 0; s[i] != '\0'; i++)
+	while (*s)
 	{
-		if (s[i] != ' ')
+		if (is_space(*s) && i)
+			i = 0;
+		else if (is_space(*s) && !i)
 		{
-			while (i < size && s[i] != ' ')
-				i++;
-			count++;
+			i = 1;
+			j++;
 		}
+		s++;
 	}
-	return (count);
+	return (j);
 }
 
 /**
- * strlen_recur - length of a string
- * @s: char pointer
+ * is_space - check if char is  ' '
+ * @c: char param
  *
- * Return: int variable
+ * Return: 1 if true
  */
 
-int strlen_recur(char *s)
+int is_space(char c)
 {
-	if (*s != '\0')
-		return (1 + strlen_recur(++s));
-	return (0);
+	return (c == ' ');
+}
+/**
+ * strt - returns 1st index of non-space char
+ * @s: char param
+ * @ind: start index
+ * Return: 1st char index
+ */
+
+int strt(char *s, int ind)
+{
+	while (is_space(*(s + ind)))
+		ind++;
+	return (ind);
+}
+
+/**
+ * _end - returns last index of non space char
+ * @s: char param
+ * @ind: start index
+ * Return: index of last non space char
+ */
+
+int _end(char *s, int ind)
+{
+	while (!is_space(*(s + ind)))
+		ind++;
+	return (ind);
 }
 
 /**
@@ -47,20 +77,29 @@ int strlen_recur(char *s)
 
 char **strtow(char *str)
 {
-	char *strcp, **strcon;
-	int len = 0, nw; /*noWords*/
+	char **s;
+	int i, k, l, start, end_, j = 0;
 
-	if (str == NULL || str[0] == 0)
+	if (!str || !count_word(str) || !*str)
+		return (NULL);
+	s = malloc(sizeof(char *) * (count_word(str) + 1));
+	if (!s)
 		return (NULL);
 
-	strcp = str;
-	len = strlen_recur(strcp);
-	nw = word_count(str, len);
+	for (i = 0; i < count_word(str); i++)
+	{
+		start = strt(str, j);
+		end_ = _end(str, start);
+		l = end_ - start;
+		s[i] = malloc(sizeof(char) * (l + 1));
 
-	if (nw < 1)
-		return (NULL);
-
-	strcon = malloc((nw + 1) * sizeof(char *));
-	strcon[0] = malloc(sizeof(char) * 1 + 1);
-	return (strcon);
+		if (!s[i])
+			return (NULL);
+		for (k = 0; k < l; k++)
+			s[i][k] = str[start++];
+		s[i][k++] = 0;
+		j = end_ + 1;
+	}
+	s[i] = NULL;
+	return (s);
 }
