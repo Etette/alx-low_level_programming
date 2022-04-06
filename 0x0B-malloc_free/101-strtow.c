@@ -5,7 +5,7 @@
 int is_space(char c);
 
 /**
- * word_count - counts number of words
+ * count_word - counts number of words
  * @s: string param
  *
  * Return: int
@@ -91,7 +91,7 @@ char **strtow(char *str)
 		start = strt(str, j);
 		end_ = _end(str, start);
 		l = end_ - start;
-		s[i] = malloc(sizeof(char) * (l + 1));
+		s[i] = malloc(sizeof(char) * l + 1);
 
 		if (!s[i])
 			return (NULL);
