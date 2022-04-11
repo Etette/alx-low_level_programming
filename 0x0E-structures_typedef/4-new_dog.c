@@ -2,32 +2,23 @@
 #include <stdlib.h>
 
 /**
- * _strdup - returns pointer to memory containing string
- * @s: pointer to the string
- * Return: pointer to string in memory
+ * _strcpy - copy given string
+ * @dest: str param
+ * @src: str param
+ * Return: pointer to dest
  */
 
-char *_strdup(char *s)
+char *_strcpy(char *dest, char *src)
 {
-	char *ptr;
-	unsigned int i = 0;
-	unsigned int j = 0;
+	int i = 0;
 
-	if (!s)
-		return (NULL);
-	/*get length of *s*/
-	while (s[i] != '\0')
-		i += 1;
-	i++;
-	ptr = malloc(sizeof(*ptr) * i);
-	if (!ptr)
-		return (NULL);
-	while (j < i)
+	while (*(src + i) != 0)
 	{
-		ptr[j] = s[i];
-		j++;
+		*(dest + i) = *(src + i);
+		i++;
 	}
-	return (ptr);
+	*(dest + i) = '\0';
+	return (dest);
 }
 
 /**
@@ -39,27 +30,40 @@ char *_strdup(char *s)
  */
 dog_t *new_dog(char *name, float age, char *owner)
 {
-	dog_t *newDog;
+	dog_t *new_dog;
+	char *new_name;
+	char *new_owner;
+	int len;
 
-	newDog = malloc(sizeof(struct dog));
-	if (!newDog)
+	new_dog = malloc(sizeof(dog_t));
+	if (new_dog == NULL)
 		return (NULL);
-/* assign name element of new struct to copy of name*/
-	newDog->name = _strdup(name);
-	if (newDog->name == NULL)
+	len = 0;
+	while (name[len] != '\0')
+		len++;
+	len++;
+	new_name = malloc(len * sizeof(*owner));
+	if (new_name == NULL)
 	{
-		free(newDog);
+		free(new_dog);
 		return (NULL);
 	}
-/*Assign owner of new struct to copy of owner*/
-	newDog->owner = _strdup(owner);
-	if (!newDog->owner)
+	len = 0;
+	while (name[len] != '\0')
+		len++;
+	len++;
+	new_owner = malloc(len * sizeof(*name));
+	if (new_owner == NULL)
 	{
-		free(newDog->name);
-		free(newDog);
+		free(new_name);
+		free(new_dog);
 		return (NULL);
 	}
-	newDog->age = age;
-	return (newDog);
+	_strcpy(new_name, name);
+	_strcpy(new_owner, owner);
+	new_dog->name = new_name;
+	new_dog->age = age;
+	new_dog->owner = new_owner;
+	return (new_dog);
 }
 
