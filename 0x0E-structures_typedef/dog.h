@@ -2,13 +2,14 @@
 #define _DOG_H
 
 /**
- * dog - struct with name, age and owner param
+ * struct dog - struct with name, age and owner param
  * @name: char param
  * @age: float param
  * @owner: char pointer
  */
 
-struct dog{
+struct dog
+{
 	char *name;
 	float age;
 	char *owner;
