@@ -9,7 +9,7 @@
  * incorrect
  */
 
-int main( int argc, char **argv)
+int main(int argc, char **argv)
 {
 	char *add;
 	int i, bytes;
