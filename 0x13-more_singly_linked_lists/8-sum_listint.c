@@ -7,17 +7,20 @@
  */
 int sum_listint(listint_t *head)
 {
-	/*listint_t *curr;*/
+	listint_t *curr;
 
 	int sum = 0;
 
 	if (head == NULL)
 		return (0);
-	/*curr = head;*/
-	while (head != NULL)
+
+	curr = head;
+
+	while (curr != NULL)
 	{
-		sum += head->n;
-		head = head->next;
+		sum += curr->n;
+		curr = curr->next;
 	}
+
 	return (sum);
 }
