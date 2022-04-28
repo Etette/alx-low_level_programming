@@ -1,40 +1,5 @@
 #include "main.h"
-
-/**
- * powX - raises b to power p
- * @b: base param
- * @p: power param
- * Return: b raised to power p
- */
-
-int powX(int b, int p)
-{
-	if (p < 0)
-		return (-1);
-	else if (p == 1)
-		return (b);
-	else if (p == 0)
-		return (1);
-	return (b * powX(b, p - 1));
-}
-
-/**
- * _strlen - length of a string
- * @s: string param
- * Return: length of string
- */
-
-int _strlen(const char *s)
-{
-	int len = 0;
-
-	while (s[len])
-	{
-		len++;
-	}
-	return (len);
-}
-
+#include <stdlib.h>
 
 /**
  * binary_to_uint - converts a binary number to unsigned int
@@ -43,19 +8,26 @@ int _strlen(const char *s)
  */
 unsigned int binary_to_uint(const char *b)
 {
-	unsigned int n = 0;
-	int i, len;
+	unsigned int i, len;
+	unsigned int dec;
 
+	i = len = dec = 0;
 	if (b == NULL)
 		return (0);
-	len = _strlen(b);
-	for (i = 0; b[i]; i++)
+	while (b[len] != '\0')
 	{
-		if (b[i] == '1')
-			n += powX(2, (len - i - 1));
-		else if (b[i] != '0')
+		if (b[len] == '0' || b[len] == '1')
+			len++;
+		else
 			return (0);
 	}
-	return (n);
+	while (i < len)
+	{
+		dec = dec << 1;
+		if (b[i] == '1')
+			dec += 1;
+		i++;
+	}
+	return (dec);
 }
 
