@@ -16,6 +16,7 @@ int clear_bit(unsigned long int *n, unsigned int index);
 unsigned int flip_bits(unsigned long int n, unsigned long int m);
 int get_endianness(void);
 int _strlen(const char *s);
+int powX(int b, int p);
 _Bool isBinary(char);
 
 #endif
