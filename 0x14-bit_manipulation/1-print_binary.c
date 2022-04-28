@@ -1,24 +1,5 @@
 #include "main.h"
-#define BIT_SIZE 8
-
-/**
- * _powX - raises a number to power p
- * @b: base
- * @p: power
- * Return: b to pwer of p
- */
-
-unsigned long int _powX(int b, int p)
-{
-	unsigned long int ans = 1;
-
-	while (p)
-	{
-		ans *= b;
-		p--;
-	}
-	return (ans);
-}
+#include <stdio.h>
 
 /**
  * print_binary - prints binary of a num
@@ -27,25 +8,31 @@ unsigned long int _powX(int b, int p)
 
 void print_binary(unsigned long int n)
 {
-	unsigned long int test = _powX(2, sizeof(unsigned long int) * BIT_SIZE - 1);
-	int start = 0;
+	unsigned long int revnum;
+	unsigned long int count;
 
+	revnum = count = 0;
 	if (n == 0)
-	{
 		_putchar('0');
-		return;
-	}
-	while (test)
+	while (n > 0)
 	{
-		if (!(test & n) && start)
+		revnum = revnum << 1;
+		revnum += n & 1;
+		count++;
+		n = n >> 1;
+	}
+	while (revnum > 0)
+	{
+		_putchar((revnum & 1) + '0');
+		revnum = revnum >> 1;
+		count--;
+	}
+	if (count > 0)
+	{
+		while (count != 0)
 		{
 			_putchar('0');
+			count--;
 		}
-		else if (test & n)
-		{
-			_putchar('1');
-			start = 1;
-		}
-		test = test >> 1;
 	}
 }
