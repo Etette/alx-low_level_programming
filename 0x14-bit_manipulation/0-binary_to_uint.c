@@ -9,14 +9,13 @@
 
 int powX(int b, int p)
 {
-	int prd = 1;
-
-	while (p > 0)
-	{
-		prd *= b;
-		p--;
-	}
-	return (prd);
+	if (p < 0)
+		return (-1);
+	else if (p == 1)
+		return (b);
+	else if (p == 0)
+		return (1);
+	return (b * powX(b, p - 1));
 }
 
 /**
@@ -29,10 +28,9 @@ int _strlen(const char *s)
 {
 	int len = 0;
 
-	while (*s)
+	while (s[len])
 	{
 		len++;
-		s++;
 	}
 	return (len);
 }
@@ -45,22 +43,19 @@ int _strlen(const char *s)
  */
 unsigned int binary_to_uint(const char *b)
 {
-	int power = _strlen(b) - 1;
-	int num = 0;
+	unsigned int n = 0;
+	int i, len;
 
-	if (!b)
+	if (b == NULL)
 		return (0);
-	while (*b)
+	len = _strlen(b);
+	for (i = 0; b[i]; i++)
 	{
-		if (*b != '0' && *b != '1')
+		if (b[i] == '1')
+			n += powX(2, (len - i - 1));
+		else if (b[i] != '0')
 			return (0);
-
-		if (*b == '1')
-			num += powX(2, power);
-
-		b++;
-		power--;
 	}
-	return (num);
+	return (n);
 }
 
